@@ -1,7 +1,7 @@
 import * as React from 'react';
 import './App.css';
-
 const logo = require('./logo.svg');
+import ChatroomComponent from './chat/ChatRoomComponent';
 
 class App extends React.Component {
   render() {
@@ -14,6 +14,7 @@ class App extends React.Component {
         <p className="App-intro">
           To get started, edit <code>src/App.tsx</code> and save to reload.
         </p>
+        <ChatroomComponent />
       </div>
     );
   }
