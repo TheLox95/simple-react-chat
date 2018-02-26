@@ -15,9 +15,10 @@ import {
 } from 'semantic-ui-react';
 import Chat from './Chat';
 import * as ReactDOM from 'react-dom';
+import Message from '../common/Message';
 interface State {
   text: string;
-  comments: string[];
+  comments: Message[];
   username: string;
   users: Set<string>;
   joined: boolean;
@@ -54,7 +55,7 @@ export default class Chatroom extends React.Component<{}, State> {
     this.forceUpdate();
   }
 
-  readonly onMessageCallback = (msg: string) => {
+  readonly onMessageCallback = (msg: Message) => {
     this.setState({ comments: this.state.comments.concat(msg) });
   }
 
@@ -89,7 +90,7 @@ export default class Chatroom extends React.Component<{}, State> {
   }
 
   readonly sendMessage = () => {
-    this._chatRoom.sendMessage(this.state.text);
+    this._chatRoom.sendMessage(new Message(this.state.text, this.state.username));
     this.setState({ text: '' });
   }
 
@@ -106,9 +107,9 @@ export default class Chatroom extends React.Component<{}, State> {
         <Segment textAlign="left">
           <Grid>
             <Grid.Column width={11}>
-              {this.state.comments.map(function(msg: string, index: number) {
+              {this.state.comments.map(function(msg: Message, index: number) {
                 return (
-                  <p key={index}>{msg}</p>
+                  <p key={index}>{msg.user} | {msg.body}</p>
                 );
               })}
             </Grid.Column>

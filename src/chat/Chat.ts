@@ -1,4 +1,5 @@
 import * as io from 'socket.io-client';
+import Message from '../common/Message';
 
 const socket = io.connect('http://localhost:4000');
 
@@ -10,7 +11,7 @@ export default class Chat {
         });
     }
 
-    sendMessage(msg: string) {
+    sendMessage(msg: Message) {
         socket.emit('message', msg);
     }
 
