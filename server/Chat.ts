@@ -24,10 +24,11 @@ io.on('connection', (socket) => {
       });            
     });
 
-    socket.on('disconnect', user => {
+    socket.on('disconnection', user => {
+      console.warn(user);
       userStoreObj.remove(user);
 
-      socket.broadcast.emit('disconnect_res', user);            
+      socket.broadcast.emit('disconnection', user);            
     });
 
 });
