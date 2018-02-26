@@ -13,7 +13,7 @@ export default class UserStore {
         this._set.delete(user);
     }
 
-    forEach(cb: (value1: string, value2: string, set: Set<String>)) {
+    forEach(cb: (value1: string, value2: string, set: Set<String>) => void) {
         this._set.forEach(cb);
     }
 
