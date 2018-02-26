@@ -1,19 +1,21 @@
+import User from '../src/common/User';
+
 export default class UserStore {
-    private _set = new Set<string>();
+    private _set = new Map<string, User>();
 
-    save(user: string) {
-        this._set.add(user);
+    save(user: User) {
+        this._set.set(user.name, user);
     }
 
-    exist(user: string) {
-        return this._set.has(user);
+    exist(userName: string) {
+        return this._set.has(userName);
     }
 
-    remove(user: string) {
-        this._set.delete(user);
+    remove(userName: string) {
+        this._set.delete(userName);
     }
 
-    forEach(cb: (value1: string, value2: string, set: Set<String>) => void) {
+    forEach(cb: (value1: User, key: string, map: Map<string, User>) => void) {
         this._set.forEach(cb);
     }
 

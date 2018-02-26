@@ -12,10 +12,10 @@ io.on('connection', (socket) => {
     });
 
     socket.on('user', user => {
-      if (userStoreObj.exist(user)) {
+      if (userStoreObj.exist(user.name)) {
         return;
       }
-
+      
       userStoreObj.save(user);
 
       userStoreObj.forEach((userItem) => {
@@ -31,7 +31,7 @@ io.on('connection', (socket) => {
     });
     
     userStoreObj.forEach((userItem) => {
-      socket.broadcast.emit('user', userItem);
+      socket.emit('user', userItem);
     }); 
 });
 
