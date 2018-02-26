@@ -24,6 +24,12 @@ io.on('connection', (socket) => {
       });            
     });
 
+    socket.on('disconnect', user => {
+      userStoreObj.remove(user);
+
+      socket.broadcast.emit('disconnect_res', user);            
+    });
+
 });
 
 server.listen(4000, function (err: string) {
