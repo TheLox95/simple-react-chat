@@ -29,7 +29,10 @@ io.on('connection', (socket) => {
 
       socket.broadcast.emit('disconnection', user);            
     });
-
+    
+    userStoreObj.forEach((userItem) => {
+      socket.broadcast.emit('user', userItem);
+    }); 
 });
 
 server.listen(4000, function (err: string) {
