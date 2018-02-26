@@ -11,7 +11,7 @@ interface State {
 
 interface Props {
     onCreatedCallback: (user: User) => void;
-    usedUsername: Set<User>;
+    usedUsername: Map<string, User>;
 }
 
 export default class CreateUser extends React.Component<Props, State> {
@@ -56,7 +56,7 @@ export default class CreateUser extends React.Component<Props, State> {
             return;
         } 
         
-        if (this.props.usedUsername.has(userObj) === true) {
+        if (this.props.usedUsername.has(user) === true) {
             this.setState({isValid: false});            
             return;
         }

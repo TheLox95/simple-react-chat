@@ -23,7 +23,7 @@ interface State {
   text: string;
   comments: Message[];
   user: User;
-  users: Set<User>;
+  users: Map<string, User>;
   joined: boolean;
 }
 
@@ -39,7 +39,7 @@ export default class Chatroom extends React.Component<{}, State> {
       text: ``,
       comments: [],
       user: new User(),
-      users: new Set(),
+      users: new Map(),
       joined: false
     };
 
@@ -55,7 +55,7 @@ export default class Chatroom extends React.Component<{}, State> {
   }
 
   readonly onUserDisconnected = (user: User) => {
-    this.state.users.delete(user);
+    this.state.users.delete(user.name);
     this.forceUpdate();
   }
 
@@ -65,7 +65,7 @@ export default class Chatroom extends React.Component<{}, State> {
   }
 
   readonly onUserCallback = (user: User) => {
-    this.setState({ users: this.state.users.add(user), joined: true });
+    this.setState({ users: this.state.users.set(user.name, user), joined: true });
   }
 
   readonly handleType = (
@@ -87,7 +87,7 @@ export default class Chatroom extends React.Component<{}, State> {
   }
 
   readonly join = (user: User) => {
-    if (this.state.users.has(user) === true) {
+    if (this.state.users.has(user.name) === true) {
       return;
     }
     this.setState({user});
@@ -111,10 +111,10 @@ export default class Chatroom extends React.Component<{}, State> {
             <Grid.Column width={5}>
               <Segment>
                 {Array.from(this.state.users).map(function(
-                  user: User,
+                  user: [string, User],
                   index: number
                 ) {
-                  return <p key={index}>{user.name}</p>;
+                  return <p key={index}>{user[0]}</p>;
                 })}
               </Segment>
             </Grid.Column>
