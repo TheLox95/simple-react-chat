@@ -11,16 +11,19 @@ import {
   Header,
   Input,
   Icon,
+  Dropdown,
   InputOnChangeData
 } from 'semantic-ui-react';
 import Chat from './Chat';
 import * as ReactDOM from 'react-dom';
 import Message from '../common/Message';
+import CreateUserComponent from './CreateUserComponent';
+import User from '../common/User';
 interface State {
   text: string;
   comments: Message[];
-  username: string;
-  users: Set<string>;
+  user: User;
+  users: Set<User>;
   joined: boolean;
 }
 
@@ -35,47 +38,34 @@ export default class Chatroom extends React.Component<{}, State> {
     this.state = {
       text: ``,
       comments: [],
-      username: ``,
+      user: new User(),
       users: new Set(),
       joined: false
     };
 
-    const chat = new Chat();
-    chat.onMessage(this.onMessageCallback);
-    chat.onUser(this.onUserCallback);
-    chat.onDisconnect(this.onUserDisconnected);
+    this._chatRoom = new Chat();    
 
-    window.addEventListener('beforeunload', (ev) => {  
-        chat.disconnect(this.state.username.toString());        
+    this._chatRoom.onMessage(this.onMessageCallback);
+    this._chatRoom.onUser(this.onUserCallback);
+    this._chatRoom.onDisconnect(this.onUserDisconnected);
+
+    window.addEventListener('beforeunload', ev => {
+      this._chatRoom.disconnect(this.state.user.name.toString());
     });
   }
 
-  readonly onUserDisconnected = (user: string) => {
+  readonly onUserDisconnected = (user: User) => {
     this.state.users.delete(user);
     this.forceUpdate();
   }
 
   readonly onMessageCallback = (msg: Message) => {
-    this.setState({ comments: this.state.comments.concat(msg) });
+    this.state.comments.push(msg);
+    this.forceUpdate();
   }
 
-  readonly onUserCallback = (user: string) => {
+  readonly onUserCallback = (user: User) => {
     this.setState({ users: this.state.users.add(user), joined: true });
-  }
-
-  componentDidMount() {
-    this._chatRoom = new Chat();
-  }
-
-  readonly handleUsername = (
-    e: React.SyntheticEvent<HTMLInputElement>,
-    data: InputOnChangeData
-  ) => {
-    if (data.value === undefined) {
-      return;
-    }
-
-    this.setState({ username: data.value.toString() });
   }
 
   readonly handleType = (
@@ -90,14 +80,17 @@ export default class Chatroom extends React.Component<{}, State> {
   }
 
   readonly sendMessage = () => {
-    this._chatRoom.sendMessage(new Message(this.state.text, this.state.username));
+    this._chatRoom.sendMessage(
+      new Message(this.state.text, this.state.user)
+    );
     this.setState({ text: '' });
   }
 
-  readonly join = (user: string) => {
+  readonly join = (user: User) => {
     if (this.state.users.has(user) === true) {
       return;
     }
+    this.setState({user});
     this._chatRoom.addUser(user);
   }
 
@@ -109,17 +102,19 @@ export default class Chatroom extends React.Component<{}, State> {
             <Grid.Column width={11}>
               {this.state.comments.map(function(msg: Message, index: number) {
                 return (
-                  <p key={index}>{msg.user} | {msg.body}</p>
+                  <p key={index}>
+                    {msg.user.name} | {msg.body}
+                  </p>
                 );
               })}
             </Grid.Column>
             <Grid.Column width={5}>
               <Segment>
                 {Array.from(this.state.users).map(function(
-                  user: string,
+                  user: User,
                   index: number
                 ) {
-                  return <p key={index}>{user}</p>;
+                  return <p key={index}>{user.name}</p>;
                 })}
               </Segment>
             </Grid.Column>
@@ -146,32 +141,7 @@ export default class Chatroom extends React.Component<{}, State> {
               </Grid.Column>
             </Grid>
           </Form>
-          <Modal
-            open={this.state.joined === false}
-            closeOnEscape={false}
-            closeOnRootNodeClick={false}
-          >
-            <Modal.Header>Write your username</Modal.Header>
-            <Modal.Content>
-              <Modal.Description>
-                <Input
-                  placeholder="Username..."
-                  onChange={this.handleUsername}
-                />
-              </Modal.Description>
-            </Modal.Content>
-            <Modal.Actions>
-              <Button
-                color="green"
-                name="checkmark"
-                disabled={this.state.username === ''}
-                onClick={() => this.join(this.state.username)}
-              >
-                <Icon name="checkmark"/>
-                OK
-              </Button>
-            </Modal.Actions>
-          </Modal>
+          <CreateUserComponent usedUsername={this.state.users} onCreatedCallback={this.join} />
         </Segment>
       </div>
     );

@@ -1,5 +1,6 @@
 import * as io from 'socket.io-client';
 import Message from '../common/Message';
+import User from '../common/User';
 
 const socket = io.connect('http://localhost:4000');
 
@@ -21,7 +22,7 @@ export default class Chat {
         });
     }
 
-    addUser(user: string) {
+    addUser(user: User) {
         socket.emit('user', user);        
     }
 
