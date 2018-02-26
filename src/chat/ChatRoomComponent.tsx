@@ -5,23 +5,14 @@ import {
   Form,
   Button,
   Grid,
-  Comment,
-  TextAreaProps,
-  Modal,
-  Header,
-  Input,
-  Icon,
-  Dropdown,
-  InputOnChangeData,
-  Image,
-  Item,
-  List
+  TextAreaProps
 } from 'semantic-ui-react';
 import Chat from './Chat';
-import * as ReactDOM from 'react-dom';
 import Message from '../common/Message';
 import CreateUserComponent from './CreateUserComponent';
 import User from '../common/User';
+import MessageListComponent from './MessageListComponent';
+import UserListComponent from './UserListComponent';
 interface State {
   text: string;
   comments: Message[];
@@ -103,35 +94,10 @@ export default class Chatroom extends React.Component<{}, State> {
         <Segment textAlign="left">
           <Grid>
             <Grid.Column width={11}>
-            <List divided={true} verticalAlign="middle">            
-              {this.state.comments.map(function(msg: Message, index: number) {
-                return (<List.Item key={index}>
-                  <Image avatar={true} src={'/avatar/' + msg.user.avatar + '.jpg'} />
-                  <List.Content>
-                    <List.Header as="a">{msg.user.name}</List.Header>
-                    {msg.body}
-                  </List.Content>
-                </List.Item>);
-              })}
-              </List>
-
+              <MessageListComponent messages={this.state.comments}/>
             </Grid.Column>
             <Grid.Column width={5}>
-              <Segment>
-                {Array.from(this.state.users).map(function(
-                  user: [string, User],
-                  index: number
-                ) {
-                  return (<div key={index}>
-                  <Item>
-                    <Item.Image size="tiny" src={'/avatar/' + user[1].avatar + '.jpg'} />
-                    <Item.Content>
-                      {user[0]}
-                    </Item.Content>
-                  </Item>
-                  </div>);
-                })}
-              </Segment>
+              <UserListComponent users={Array.from(this.state.users.values())}/>
             </Grid.Column>
           </Grid>
         </Segment>
