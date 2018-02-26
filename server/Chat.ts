@@ -25,7 +25,6 @@ io.on('connection', (socket) => {
     });
 
     socket.on('disconnection', user => {
-      console.warn(user);
       userStoreObj.remove(user);
 
       socket.broadcast.emit('disconnection', user);            
