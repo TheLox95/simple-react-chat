@@ -12,7 +12,8 @@ import {
   Input,
   Icon,
   Dropdown,
-  InputOnChangeData
+  InputOnChangeData,
+  Item
 } from 'semantic-ui-react';
 import Chat from './Chat';
 import * as ReactDOM from 'react-dom';
@@ -114,7 +115,14 @@ export default class Chatroom extends React.Component<{}, State> {
                   user: [string, User],
                   index: number
                 ) {
-                  return <p key={index}>{user[0]}</p>;
+                  return (<div key={index}>
+                  <Item>
+                    <Item.Image size="tiny" src={'/avatar/' + user[1].avatar + '.jpg'} />
+                    <Item.Content>
+                      {user[0]}
+                    </Item.Content>
+                  </Item>
+                  </div>);
                 })}
               </Segment>
             </Grid.Column>
