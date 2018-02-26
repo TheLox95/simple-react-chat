@@ -13,7 +13,9 @@ import {
   Icon,
   Dropdown,
   InputOnChangeData,
-  Item
+  Image,
+  Item,
+  List
 } from 'semantic-ui-react';
 import Chat from './Chat';
 import * as ReactDOM from 'react-dom';
@@ -101,13 +103,18 @@ export default class Chatroom extends React.Component<{}, State> {
         <Segment textAlign="left">
           <Grid>
             <Grid.Column width={11}>
+            <List divided={true} verticalAlign="middle">            
               {this.state.comments.map(function(msg: Message, index: number) {
-                return (
-                  <p key={index}>
-                    {msg.user.name} | {msg.body}
-                  </p>
-                );
+                return (<List.Item key={index}>
+                  <Image avatar={true} src={'/avatar/' + msg.user.avatar + '.jpg'} />
+                  <List.Content>
+                    <List.Header as="a">{msg.user.name}</List.Header>
+                    {msg.body}
+                  </List.Content>
+                </List.Item>);
               })}
+              </List>
+
             </Grid.Column>
             <Grid.Column width={5}>
               <Segment>
