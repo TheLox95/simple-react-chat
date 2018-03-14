@@ -17,7 +17,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "tsc": "tsc -p server -w",
-    "dev": "concurrently \"npm run tsc\" \"npm run start\" "
+    "dev": "concurrently \"node server/Chat.js\" \"npm run start\" "
   },
   "devDependencies": {
     "@types/jest": "^22.1.3",
