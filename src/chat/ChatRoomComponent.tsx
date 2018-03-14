@@ -1,12 +1,5 @@
 import * as React from 'react';
-import {
-  Segment,
-  TextArea,
-  Form,
-  Button,
-  Grid,
-  TextAreaProps
-} from 'semantic-ui-react';
+import { Input, Segment, TextArea, Form, Button, Grid, TextAreaProps, InputOnChangeData } from 'semantic-ui-react';
 import Chat from './Chat';
 import Message from '../common/Message';
 import CreateUserComponent from './CreateUserComponent';
@@ -63,8 +56,8 @@ export default class Chatroom extends React.Component<{}, State> {
   }
 
   readonly handleType = (
-    e: React.FormEvent<HTMLTextAreaElement>,
-    data: TextAreaProps
+    e: React.SyntheticEvent<HTMLInputElement>,
+    data: InputOnChangeData
   ) => {
     if (data.value === undefined) {
       return;
@@ -105,11 +98,11 @@ export default class Chatroom extends React.Component<{}, State> {
           <Form>
             <Grid>
               <Grid.Column width={14}>
-                <TextArea
+                <Input
+                  fluid={true}
                   value={this.state.text}
-                  autoHeight={true}
-                  placeholder="Write message"
-                  onInput={this.handleType}
+                  placeholder="Write message... "
+                  onChange={this.handleType}
                 />
               </Grid.Column>
               <Grid.Column width={2}>
