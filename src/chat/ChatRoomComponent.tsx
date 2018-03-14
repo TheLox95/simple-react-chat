@@ -91,7 +91,7 @@ export default class Chatroom extends React.Component<{}, State> {
   render() {
     return (
       <div id="chatroom">
-        <Segment textAlign="left">
+        <Segment textAlign="left" id="chatBox">
           <Grid>
             <Grid.Column width={11}>
               <MessageListComponent messages={this.state.comments}/>

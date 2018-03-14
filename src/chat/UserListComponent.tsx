@@ -9,7 +9,7 @@ interface Props {
 export default class UserListComponent extends React.Component<Props> {
   render() {
     return (
-      <Segment>
+      <Segment id="userBox">
         {this.props.users.map(function(
           user: User,
           index: number

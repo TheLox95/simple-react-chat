@@ -1,3 +1,13 @@
 .ui.modal.transition.visible.active{
     margin-top: 0px !important;
 }
+
+#chatBox{
+    max-height: 300px;
+    overflow-y: scroll;
+}
+
+#userBox{
+    max-height: 200px;
+    overflow-y: scroll;
+}
