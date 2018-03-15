@@ -9,10 +9,10 @@ class App extends React.Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
+          <h1 className="App-title">Welcome to my Chat App</h1>
         </header>
         <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
+          If you are alone you can open another tab and chat with yourself ;)
         </p>
         <ChatroomComponent />
       </div>
