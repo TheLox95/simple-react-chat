@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "concurrently": "^3.5.1",
+    "env-cmd": "^7.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts-ts": "2.13.0",
@@ -17,7 +18,8 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "tsc": "tsc -p server -w",
-    "dev": "concurrently \"node server/Chat.js\" \"npm run start\" "
+    "dev": "concurrently \"node server/Chat.js\" \"npm run start\" ",
+    "heroku-postbuild": "env-cmd .env.heroku npm run build"
   },
   "devDependencies": {
     "@types/jest": "^22.1.3",
