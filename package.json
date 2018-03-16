@@ -3,8 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@types/express": "^4.11.1",
     "concurrently": "^3.5.1",
     "env-cmd": "^7.0.0",
+    "express": "^4.16.3",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
     "react-scripts-ts": "2.13.0",
