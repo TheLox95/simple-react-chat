@@ -1,7 +1,7 @@
-import { createServer } from 'http';
-const server = createServer();
+import { Server as ServerClass } from './Server';
+const Server = new ServerClass();
 import * as ioModule from 'socket.io';
-const io = ioModule.listen(server);
+const io = ioModule.listen(Server.instance, {path: '/api'});
 import UserStore from './UserStore';
 const userStoreObj = new UserStore();
 
@@ -35,7 +35,4 @@ io.on('connection', (socket) => {
     }); 
 });
 
-server.listen(4000, function (err: string) {
-  if (err) { throw err; }
-  // console.log('listening on port 3000');
-});
+Server.listen();
