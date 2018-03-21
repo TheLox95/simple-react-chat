@@ -17,8 +17,10 @@ export default class Chat {
     }
 
     onUser(cb: Function) {
-        socket.on('user', (msg: string) => {
-            cb(msg);
+        socket.on('user', (msg: string[]) => {
+            msg.forEach((user) => {
+                cb(user);                
+            });
         });
     }
 
