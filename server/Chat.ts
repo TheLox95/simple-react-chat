@@ -18,10 +18,8 @@ io.on('connection', (socket) => {
       
       userStoreObj.save(user);
 
-      userStoreObj.forEach((userItem) => {
-        socket.emit('user', userItem);        
-        socket.broadcast.emit('user', userItem);
-      });            
+      socket.emit('user', userStoreObj.users);        
+      socket.broadcast.emit('user', userStoreObj.users);            
     });
 
     socket.on('disconnection', user => {
@@ -30,9 +28,8 @@ io.on('connection', (socket) => {
       socket.broadcast.emit('disconnection', user);            
     });
     
-    userStoreObj.forEach((userItem) => {
-      socket.emit('user', userItem);
-    }); 
+    socket.emit('user', userStoreObj.users);
+    
 });
 
 Server.listen();
