@@ -21,7 +21,7 @@
     "test": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "tsc": "tsc -p server -w",
-    "dev": "concurrently \"node server/Chat.js\" \"npm run start\" ",
+    "dev": "concurrently \"node server/Chat.js\" \"npm run start:react\" ",
     "heroku-postbuild": "env-cmd .env.heroku npm run build"
   },
   "devDependencies": {
