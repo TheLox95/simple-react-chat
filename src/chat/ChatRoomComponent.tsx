@@ -41,8 +41,8 @@ export default class Chatroom extends React.Component<{}, State> {
     });
   }
 
-  readonly onUserDisconnected = (user: User) => {
-    this.state.users.delete(user.name);
+  readonly onUserDisconnected = (user: string) => {
+    this.state.users.delete(user);
     this.forceUpdate();
   }
 
